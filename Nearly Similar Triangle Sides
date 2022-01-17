@@ -1,0 +1,72 @@
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
+
+
+
+class Result
+{
+
+    /*
+     * Complete the 'nearlySimilarRectangles' function below.
+     *
+     * The function is expected to return a LONG_INTEGER.
+     * The function accepts 2D_LONG_INTEGER_ARRAY sides as parameter.
+     */
+
+    public static long nearlySimilarRectangles(List<List<long>> sides)
+    {
+        int numsimilar = 0;
+        
+        for(int i = 0; i<sides.Count-1; i++)
+        {
+            for(int j = i+1;j<sides.Count; j++)
+            {
+            if(sides[i][0]/sides[j][0] == sides[i][1]/sides[j][1])
+            {
+                numsimilar+=1;
+            }
+            }
+               
+        }
+        return numsimilar;
+        
+
+    }
+
+}
+
+class Solution
+{
+    public static void Main(string[] args)
+    {
+        TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+        int sidesRows = Convert.ToInt32(Console.ReadLine().Trim());
+        int sidesColumns = Convert.ToInt32(Console.ReadLine().Trim());
+
+        List<List<long>> sides = new List<List<long>>();
+
+        for (int i = 0; i < sidesRows; i++)
+        {
+            sides.Add(Console.ReadLine().TrimEnd().Split(' ').ToList().Select(sidesTemp => Convert.ToInt64(sidesTemp)).ToList());
+        }
+
+        long result = Result.nearlySimilarRectangles(sides);
+
+        textWriter.WriteLine(result);
+
+        textWriter.Flush();
+        textWriter.Close();
+    }
+}
